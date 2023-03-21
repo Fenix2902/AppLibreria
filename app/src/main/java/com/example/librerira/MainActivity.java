@@ -1,6 +1,7 @@
 package com.example.librerira;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,13 +12,16 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText idusuario, nomusuario, email, password;
-    RadioButton activo, noactivo;
+    EditText idusuario, nomusuario, email, password, idlibro, nomlibro, costoLibro;
+    RadioButton activo, noactivo, disponible, nodisponible;
     Button crear, editar, buscar, borrar, listar;
+
+    String oldidUser = "";
 
     //instanciar la clase DbUsers para los diferentes botones (crud)
 
@@ -44,8 +48,18 @@ public class MainActivity extends AppCompatActivity {
         buscar = findViewById(R.id.btnbuscar);
         borrar = findViewById(R.id.btnborrar);
         listar = findViewById(R.id.btnlist);
+        listar.setEnabled(false);
 
-        //Evento crear
+        //Referencia elementos de libros
+
+        idlibro.findViewById(R.id.etidlibro);
+        nomlibro.findViewById(R.id.etlibro);
+        costoLibro.findViewById(R.id.etcosto);
+
+        disponible.findViewById(R.id.rbdisponible);
+        nodisponible.findViewById(R.id.rbnodisponible);
+
+        //Evento crear usuarios
 
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,13 +81,11 @@ public class MainActivity extends AppCompatActivity {
                         cvUser.put("name", nomusuario.getText().toString());
                         cvUser.put("email", email.getText().toString());
                         cvUser.put("password", password.getText().toString());
-                        cvUser.put("status", noactivo.isChecked() ? 0 : 1);
+                        cvUser.put("status", activo.isChecked() ? 1 : 0);
                         sdUser.insert("Users", null, cvUser);
                         sdUser.close();
-                        idusuario.setText("");
-                        nomusuario.setText("");
-                        email.setText("");
-                        password.setText("");
+                        limpiar();
+
                         Toast.makeText(getApplicationContext(), "Usuario guardado correctamente", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Usuario ya registrado,intenta con otro número de indentificación..", Toast.LENGTH_LONG).show();
@@ -84,6 +96,100 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Evento para Editar
+
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase sdUsuarios = Usuarios.getWritableDatabase();
+                if (idusuario.getText().toString().equals(oldidUser)){
+                    sdUsuarios.execSQL("Update Users set name ='"+nomusuario.getText().toString()+"',email= '"+email.getText().toString()+"',password ='"+password.getText().toString()+"',status='"+(activo.isChecked()? 1:0)+"'where idUser= '"+oldidUser+"'");
+                    Toast.makeText(getApplicationContext(), "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+                }else {
+                    SQLiteDatabase sdUsuariosread = Usuarios.getReadableDatabase();
+                    String query = "Select idUser From Users Where idUser ='"+idusuario.getText().toString()+"'";
+                    Cursor cUser = sdUsuariosread.rawQuery(query,null);
+                    if (!cUser.moveToFirst()){
+                        sdUsuarios.execSQL("Update Users set name ='"+nomusuario.getText().toString()+"',email= '"+email.getText().toString()+"',password ='"+password.getText().toString()+"',status='"+(activo.isChecked()? 1:0)+"'where idUser= '"+oldidUser+"'");
+                        Toast.makeText(getApplicationContext(), "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"Este Email ya esta asignado a otro usuario, intente con otro email...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        //Evento Click para buscar
+
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchUser(idusuario.getText().toString());
+            }
+
+            private Cursor findUser(String fidUser) {
+                SQLiteDatabase dbsearchUser = Usuarios.getReadableDatabase();
+                String sqlSearch = "Select idUser, name, email, status From Users Where idUser ='"+fidUser+"'";
+                Cursor cUser = dbsearchUser.rawQuery(sqlSearch,null);
+                if (cUser.moveToFirst()){
+                    dbsearchUser.close();
+                    return cUser;
+                }else {
+                    dbsearchUser.close();
+                    return cUser;
+                }
+            }
+
+            private void searchUser(String sidUsuario) {
+                Cursor cUser =findUser(sidUsuario);
+                if (findUser(sidUsuario).moveToFirst()){
+                    //Mostrar los datos del usuario en pantalla
+                    oldidUser=idusuario.getText().toString();
+                    nomusuario.setText(cUser.getString(1));
+                    email.setText(cUser.getString(2));
+                    if (cUser.getInt(3)==1){
+                        activo.setChecked(true);
+                        listar.setEnabled(true);
+                    }else {
+                        noactivo.setChecked(true);
+                        listar.setEnabled(false);
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(), "El ID del usuario no fue encontrado", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //Evento para borrar
+
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!nomusuario.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
+                    AlertDialog.Builder alertDialogBuilder =new AlertDialog.Builder(MainActivity.this);
+                    alertDialogBuilder.setMessage("Deseas Eliminar el Contacto");
+                    alertDialogBuilder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            SQLiteDatabase obUser = Usuarios.getWritableDatabase();
+                            obUser.execSQL("Delete From Users Where idUser='"+idusuario.getText().toString()+"'");
+                            Toast.makeText(getApplicationContext(), "Contacto Eliminado correctamente....", Toast.LENGTH_SHORT).show();
+                            limpiar();
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }else {
+                    Toast.makeText(getApplicationContext(),"Debes tener todos los datos diligenciados", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         //Evento Click para Listado de Usuarios
         listar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +205,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+    }
+    //Evento limpiar campos
+    private void limpiar() {
+            idusuario.setText("");
+            nomusuario.setText("");
+            email.setText("");
+            password.setText("");
     }
 }
