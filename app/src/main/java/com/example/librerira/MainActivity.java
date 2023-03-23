@@ -17,9 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText idusuario, nomusuario, email, password, idlibro, nomlibro, costoLibro;
-    RadioButton activo, noactivo, disponible, nodisponible;
-    Button crear, editar, buscar, borrar, listar;
+    EditText idusuario, nomusuario, email, password;
+    RadioButton activo, noactivo;
+    Button crear, editar, buscar, borrar, listar, libros, renta;
 
     String oldidUser = "";
 
@@ -50,14 +50,8 @@ public class MainActivity extends AppCompatActivity {
         listar = findViewById(R.id.btnlist);
         listar.setEnabled(false);
 
-        //Referencia elementos de libros
-
-        idlibro.findViewById(R.id.etidlibro);
-        nomlibro.findViewById(R.id.etlibro);
-        costoLibro.findViewById(R.id.etcosto);
-
-        disponible.findViewById(R.id.rbdisponible);
-        nodisponible.findViewById(R.id.rbnodisponible);
+        libros = findViewById(R.id.btnlibros);
+        renta = findViewById(R.id.btnRenta);
 
         //Evento crear usuarios
 
@@ -203,6 +197,24 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"El ususario activo no tiene privilegios para este informe",Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        //Evento Click para Registro libros
+
+        libros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Verificar si el Usuario tiene Rol de administrador
+                if (activo.isChecked() && !idusuario.getText().toString().isEmpty()){
+                    //pasar a la actividad que muestra los usuarios
+                    /*Intent intent = new Intent(MainActivity.this, MainActivity_books.class);
+                    startActivity(intent);*/
+                    startActivity(new Intent(getApplicationContext(),MainActivity_books.class));//permite ir a otra pagina
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"El ususario activo no tiene privilegios para este informe",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="USUARIOS"
+            android:text="REGISTRO USUARIOS"
             android:textSize="30dp" />
     </LinearLayout>
 
@@ -50,8 +50,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etidusuario"
-                android:layout_width="409dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:background="#00BCD4"
                 android:hint="Identificación Usuario"
                 android:selectAllOnFocus="true" />
@@ -81,6 +82,7 @@
                 android:id="@+id/etnombreusuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:background="#00BCD4"
                 android:hint="Nombre Usuario"
                 android:selectAllOnFocus="true" />
@@ -109,6 +111,7 @@
                 android:id="@+id/etemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:background="#00BCD4"
                 android:hint="E-mail" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -136,6 +139,7 @@
                 android:id="@+id/etpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:background="#00BCD4"
                 android:hint="Password" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -249,6 +253,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout9"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -265,9 +270,42 @@
             android:id="@+id/btnlist"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:layout_weight="1"
             android:backgroundTint="#00BCD4"
             android:text="Listar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+        <Button
+            android:id="@+id/btnlibros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="#00BCD4"
+            android:layout_weight="1"
+            android:text="Libros" />
+
+        <Button
+            android:id="@+id/btnRenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="#00BCD4"
+            android:layout_weight="1"
+            android:text="Renta" />
     </LinearLayout>
 
 
