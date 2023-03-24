@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbBooks extends SQLiteOpenHelper {
 
     //creacion de tablas
-    String tbBook = "Create Table Books(idBook text primary key, name text, coste text, available integer)";
+    String tbBook = "Create Table Books(idbook text primary key, name text, coste text, available integer)";
 
     public DbBooks(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

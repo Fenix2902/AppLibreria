@@ -217,6 +217,22 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        renta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Verificar si el Usuario tiene Rol de administrador
+                if (activo.isChecked() && !idusuario.getText().toString().isEmpty()){
+                    //pasar a la actividad que muestra los usuarios
+                    /*Intent intent = new Intent(MainActivity.this, MainActivity_books.class);
+                    startActivity(intent);*/
+                    startActivity(new Intent(getApplicationContext(),MainActivity_Rent.class));//permite ir a otra pagina
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"El ususario activo no tiene privilegios para este informe",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     //Evento limpiar campos
     private void limpiar() {

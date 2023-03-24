@@ -32,11 +32,11 @@ public class MainActivity_books extends AppCompatActivity {
 
         //referenciar elementos instanciados
 
-        idlibro.findViewById(R.id.etidlibro);
-        libro.findViewById(R.id.etlibro);
-        costo.findViewById(R.id.etcosto);
+        //idlibro.findViewById(R.id.etidlibro);
+        /*libro.findViewById(R.id.etlibro);
+        costo.findViewById(R.id.etcosto);*/
 
-        disponible.findViewById(R.id.rbdisponible);
+        /*disponible.findViewById(R.id.rbdisponible);
         nodisponible.findViewById(R.id.rbnodisponible);
 
         crear.findViewById(R.id.btncrear);
@@ -44,11 +44,11 @@ public class MainActivity_books extends AppCompatActivity {
         buscar.findViewById(R.id.btnbuscar);
         borrar.findViewById(R.id.btnborrar);
         listar.findViewById(R.id.btnlist);
-        listar.setEnabled(false);
+        listar.setEnabled(false);*/
 
         //evento de crear libros
 
-        crear.setOnClickListener(new View.OnClickListener() {
+       /* crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!idlibro.getText().toString().isEmpty() && !libro.getText().toString().isEmpty() && !costo.getText().toString().isEmpty()) {
@@ -59,29 +59,28 @@ public class MainActivity_books extends AppCompatActivity {
                     if (!cUser.moveToFirst()) {//si no encuentra el id del usuario
 
                         //Instanciar clase SQLiteDatabase como escritura
-                        SQLiteDatabase sdUser = Usuarios.getWritableDatabase();
+                        SQLiteDatabase sdUser = books.getWritableDatabase();
 
                         //Contenedor de Valores
 
                         ContentValues cvUser = new ContentValues();
-                        cvUser.put("idUser", idusuario.getText().toString());
-                        cvUser.put("name", nomusuario.getText().toString());
-                        cvUser.put("email", email.getText().toString());
-                        cvUser.put("password", password.getText().toString());
-                        cvUser.put("status", activo.isChecked() ? 1 : 0);
-                        sdUser.insert("Users", null, cvUser);
+                        cvUser.put("idbook", idlibro.getText().toString());
+                        cvUser.put("name", libro.getText().toString());
+                        cvUser.put("coste", costo.getText().toString());
+                        cvUser.put("status", disponible.isChecked() ? 1 : 0);
+                        sdUser.insert("Books", null, cvUser);
                         sdUser.close();
-                        limpiar();
+                        //limpiar();
 
-                        Toast.makeText(getApplicationContext(), "Usuario guardado correctamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Libro guardado correctamente", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Usuario ya registrado,intenta con otro número de indentificación..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "El libro ya esta registrado,intenta con otro número de identificación..", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Ingrese todos los datos del formulario..", Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
 
     }
 }

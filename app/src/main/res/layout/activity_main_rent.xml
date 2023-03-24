@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity_books">
+    tools:context=".MainActivity_Rent">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="LIBROS"
+            android:text="RENTA"
             android:textSize="30dp" />
     </LinearLayout>
 
@@ -49,11 +49,11 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etidlibro"
+                android:id="@+id/etidrent"
                 android:layout_width="409dp"
                 android:layout_height="wrap_content"
                 android:background="#00BCD4"
-                android:hint="Identificación libro"
+                android:hint="Identificación Renta"
                 android:selectAllOnFocus="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,11 +78,11 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etlibro"
+                android:id="@+id/etiduser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00BCD4"
-                android:hint="Nombre Libro"
+                android:hint="Identificacion Usuario"
                 android:selectAllOnFocus="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -106,16 +106,42 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etcosto"
+                android:id="@+id/etidbook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00BCD4"
-                android:hint="Costo" />
+                android:hint="Identificacion libro" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="372dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00BCD4"
+                android:hint="Fecha" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout7"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -259,6 +285,4 @@
             android:backgroundTint="#00BCD4"
             android:text="Listar" />
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
