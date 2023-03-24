@@ -49,7 +49,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etidlibro"
+                android:id="@+id/teidlibro"
                 android:layout_width="409dp"
                 android:layout_height="wrap_content"
                 android:background="#00BCD4"
@@ -78,7 +78,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etlibro"
+                android:id="@+id/etnomlibro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00BCD4"
