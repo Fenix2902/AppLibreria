@@ -20,7 +20,7 @@ public class DbBooks extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase Db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase Db, int oldVersion, int newVersion) {
         Db.execSQL("Drop table Books");
         Db.execSQL(tbBook);//actualiza
     }

@@ -19,11 +19,11 @@ public class listLibros extends AppCompatActivity {
     Button btnback;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vistabooks);
-        listbooks.findViewById(R.id.lvlibros);
-        btnback.findViewById(R.id.btnback);
+        listbooks = findViewById(R.id.lvlibros);
+        btnback = findViewById(R.id.btnback);
         loadbooks();
         getSupportActionBar().hide();
 
@@ -40,16 +40,16 @@ public class listLibros extends AppCompatActivity {
     private void loadbooks() {
         arrbooks = retrieveBooks();
         //Generar el adaptador que pasara los datos al listView
-        ArrayAdapter<String> adpBooks = new ArrayAdapter<>(this,android.R.layout.simple_expandable_list_item_1, arrbooks);
+        ArrayAdapter<String> adpBooks = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, arrbooks);
         listbooks.setAdapter(adpBooks);
     }
 
     private ArrayList<String> retrieveBooks() {
         ArrayList<String> bookData = new ArrayList<>();
         //Cargar los libros en el arrayList arrBooks
-        DbUsers sohdbbook = new DbUsers(getApplicationContext(),"librosdb",null,1);
+        DbBooks sohdbbook = new DbBooks(getApplicationContext(),"librosdb",null,1);
         SQLiteDatabase dbBookread = sohdbbook.getReadableDatabase();
-        String qAllbooks = "Select idBook, name, coste, available from Books";
+        String qAllbooks = "Select idbook, name, coste, available from Books";
         Cursor cBooks = dbBookread.rawQuery(qAllbooks,null);
         if (cBooks.moveToFirst()){
             do{

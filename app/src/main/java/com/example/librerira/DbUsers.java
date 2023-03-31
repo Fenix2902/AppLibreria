@@ -27,11 +27,8 @@ public class DbUsers extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase Db, int oldVersion, int newVersion) {
         Db.execSQL("Drop Table Users");
-        //Db.execSQL("Drop Table Rent");//borra el dato anterior
 
-        //Db.execSQL("Drop table Books");
-        //Db.execSQL(tbBook);//actualiza
         Db.execSQL(tbUser);//actualiza//
-        //Db.execSQL(tbRent);
+
     }
 }

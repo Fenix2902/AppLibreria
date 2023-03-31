@@ -1,16 +1,17 @@
 package com.example.librerira;
 
 import android.content.ContentValues;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,8 @@ public class MainActivity_books extends AppCompatActivity {
     EditText idlibro, libro, costo;
     RadioButton disponible, nodisponible;
     Button crear, editar, buscar, borrar, listar;
+
+    String oldidlibro = " ";
 
     //instanciar la clase DbUsers para los diferentes botones (crud)
 
@@ -46,7 +49,6 @@ public class MainActivity_books extends AppCompatActivity {
         listar = findViewById(R.id.btnlist);
         listar.setEnabled(false);
 
-       String oldidlibro = "";
 
         //evento de crear libros
 
@@ -61,18 +63,18 @@ public class MainActivity_books extends AppCompatActivity {
                     if (!cBook.moveToFirst()) {//si no encuentra el id del usuario
 
                         //Instanciar clase SQLiteDatabase como escritura
-                        SQLiteDatabase sdUser = books.getWritableDatabase();
+                        SQLiteDatabase sdbook = books.getWritableDatabase();
 
                         //Contenedor de Valores
 
                         ContentValues cvBook = new ContentValues();
-                        cvBook.put("idbook", idlibro.getText().toString());
+                        cvBook.put("idBook", idlibro.getText().toString());
                         cvBook.put("name", libro.getText().toString());
                         cvBook.put("coste", costo.getText().toString());
-                        cvBook.put("status", disponible.isChecked() ? 1 : 0);
-                        sdUser.insert("Books", null, cvBook);
-                        sdUser.close();
-                        //limpiar();
+                        cvBook.put("available", disponible.isChecked() ? 1 : 0);
+                        sdbook.insert("Books", null, cvBook);
+                        sdbook.close();
+                        limpiar();
 
                         Toast.makeText(getApplicationContext(), "Libro guardado correctamente", Toast.LENGTH_LONG).show();
                     } else {
@@ -113,7 +115,7 @@ public class MainActivity_books extends AppCompatActivity {
 
             private Cursor findBook(String fidBook) {
                 SQLiteDatabase dbsearchBook = books.getReadableDatabase();
-                String sqlSearch = "Select idbook, name, coste, available From Books Where idbook ='"+fidBook+"'";
+                String sqlSearch = "Select idBook, name, coste, available From Books Where idbook ='"+fidBook+"'";
                 Cursor cBook = dbsearchBook.rawQuery(sqlSearch,null);
                 if (cBook.moveToFirst()){
                     dbsearchBook.close();
@@ -128,7 +130,7 @@ public class MainActivity_books extends AppCompatActivity {
                 Cursor cBook =findBook(sidBook);
                 if (findBook(sidBook).moveToFirst()){
                     //Mostrar los datos del usuario en pantalla
-                    //oldidlibro = idlibro.getText().toString();
+                    oldidlibro = idlibro.getText().toString();
                     libro.setText(cBook.getString(1));
                     costo.setText(cBook.getString(2));
                     if (cBook.getInt(3)==1){
@@ -139,7 +141,7 @@ public class MainActivity_books extends AppCompatActivity {
                         listar.setEnabled(false);
                     }
                 }else {
-                    Toast.makeText(getApplicationContext(), "El ID del usuario no fue encontrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "El ID del libro no fue encontrado", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -160,5 +162,11 @@ public class MainActivity_books extends AppCompatActivity {
             }
         });
 
+    }
+    //Evento limpiar campos
+    private void limpiar() {
+        idlibro.setText("");
+        libro.setText("");
+        costo.setText("");
     }
 }
